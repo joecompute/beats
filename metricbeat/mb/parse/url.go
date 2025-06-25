@@ -22,6 +22,7 @@ import (
 	"net"
 	"net/url"
 	p "path"
+	"reflect"
 	"strings"
 
 	"github.com/elastic/beats/v7/metricbeat/helper/dialer"
@@ -65,7 +66,7 @@ func (b URLHostParserBuilder) Build() mb.HostParser {
 		if ok {
 			user, ok = t.(string)
 			if !ok {
-				return mb.HostData{}, fmt.Errorf("'username' config for module %v is not a string", module.Name())
+				return mb.HostData{}, fmt.Errorf("'username' config for module %v is not a string: [%v] (%T)", module.Name(), t, reflect.TypeOf(t))
 			}
 		} else {
 			user = b.DefaultUsername
